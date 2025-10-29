@@ -26,18 +26,17 @@ jobs:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
         run: |
-          BINARY_NAME="my-app-${{ matrix.goos }}-${{ matrix.goarch }}"
+          BINARY_NAME="derper-${{ matrix.goos }}-${{ matrix.goarch }}"
           if [ "${{ matrix.goos }}" = "windows" ]; then
             BINARY_NAME="${BINARY_NAME}.exe"
           fi
           go build -o dist/$BINARY_NAME -ldflags="-s -w" # Adjust path to your main package
-          tar -czvf dist/${BINARY_NAME}.tar.gz -C dist $BINARY_NAME # Create a compressed archive
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: dist/*.tar.gz # Upload all compressed archives
+          files: dist/*
           prerelease: ${{ contains(github.ref, '-beta') || contains(github.ref, '-rc') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
