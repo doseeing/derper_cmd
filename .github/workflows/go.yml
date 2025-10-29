@@ -30,7 +30,7 @@ jobs:
           if [ "${{ matrix.goos }}" = "windows" ]; then
             BINARY_NAME="${BINARY_NAME}.exe"
           fi
-          go build -o dist/$BINARY_NAME -ldflags="-s -w" # Adjust path to your main package
+          CGO_ENABLED=0 go build -o dist/$BINARY_NAME -ldflags="-s -w" # Adjust path to your main package
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
