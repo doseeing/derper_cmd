@@ -30,7 +30,7 @@ jobs:
           if [ "${{ matrix.goos }}" = "windows" ]; then
             BINARY_NAME="${BINARY_NAME}.exe"
           fi
-          go build -o dist/$BINARY_NAME -ldflags="-s -w" ./derper.go # Adjust path to your main package
+          go build -o dist/$BINARY_NAME -ldflags="-s -w" # Adjust path to your main package
           tar -czvf dist/${BINARY_NAME}.tar.gz -C dist $BINARY_NAME # Create a compressed archive
 
       - name: Create Release and Upload Assets
